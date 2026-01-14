@@ -5,11 +5,10 @@
 #include <gtest/gtest.h>
 #include <sys/mman.h>
 
+#include <csignal>
 #include <cstring>
 #include <mutex>
-#include <csignal>
 
-//!!#include "ara/core/abort.h"
 #include "score/span.hpp"
 #define private public
 #include "score/time/utility/TsyncConfigTypes.h"
@@ -57,7 +56,7 @@ protected:
         signal(SIGABRT, SIG_DFL);
     }
 
-    static void AbortHandler(int signal) noexcept {
+    static void AbortHandler(int /*signal*/) noexcept {
         // the mock has to be reset here, otherwise the expectations for our death tests
         // will never be met/evaluated.
         shared_mem_mock.reset();
